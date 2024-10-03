@@ -177,7 +177,7 @@ function App() {
       </Menu>
       <Blob x={position.x} y={position.y} /> {/* Ensure Blob is using the updated position */}
       <MainContainer>
-        <ProfilePic style={profileProps} src="/public/pics/profil_pic.jpg" alt="Profile Picture" />
+        <ProfilePic style={profileProps} src="/build/pics/profil_pic.jpg" alt="Profile Picture" />
         <Content>
           <Title style={titleProps}>Reimagine a whole new world of endless opportunities.</Title>
           <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
