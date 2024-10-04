@@ -81,39 +81,56 @@ const ToggleButton = styled.button`
 
 const MainContainer = styled.div`
   flex: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
+  justify-content: center;
+  height: 100%;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    justify-items: center;
+  }
 `;
+
 
 const ProfilePic = styled(animated.img)`
   width: 40%;
   height: auto;
   border-radius: 50%;
-  margin-left: 5%;
-  // align-self: flex-start;
-  position: relative;
-  overflow: hidden;
-  display: block;
-
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: -10px; right: -10px; bottom: -10px; left: -10px;
-    background: inherit;
-    filter: blur(10px);
-    z-index: -1;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  justify-self: start;
+  align-self: start;
+  transition: transform 0.3s ease-out;
+  &:hover {
+    transform: scale(1.05);
+  }
+  @media (max-width: 768px) {
+    justify-self: center;
+    width: 50%;
   }
 `;
 
 const Content = styled.div`
   width: 40%;
   text-align: right;
-  margin-right: 5%;
-  align-self: flex-end;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  justify-self: end;
+  align-self: end;
+  transition: transform 0.3s ease-out;
+  &:hover {
+    transform: scale(1.05);
+  }
+  @media (max-width: 768px) {
+    justify-self: center;
+    text-align: center;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
 `;
+
 
 const Title = styled(animated.div)`
   font-size: 2em;
