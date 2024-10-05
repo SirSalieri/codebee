@@ -81,53 +81,45 @@ const ToggleButton = styled.button`
 
 const MainContainer = styled.div`
   flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 100%;
+  padding: 50px; // Adds padding around the content to prevent touching the edges
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    justify-items: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around; // Ensures space between items is maintained
   }
 `;
 
 
 const ProfilePic = styled(animated.img)`
-  width: 40%;
+  width: 30%; // Adjusted width for better spacing
   height: auto;
   border-radius: 50%;
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-  justify-self: start;
-  align-self: start;
   transition: transform 0.3s ease-out;
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.1); // Slightly larger scale for emphasis
   }
   @media (max-width: 768px) {
-    justify-self: center;
-    width: 50%;
+    width: 50%; // Larger on smaller screens for visibility
   }
 `;
 
+
 const Content = styled.div`
-  width: 40%;
+  width: 60%; // Allows text more room
   text-align: right;
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-  justify-self: end;
-  align-self: end;
   transition: transform 0.3s ease-out;
   &:hover {
-    transform: scale(1.05);
+    transform: translateX(-10px); // Subtle movement to add dynamic effect
   }
   @media (max-width: 768px) {
-    justify-self: center;
+    width: 80%; // More width on smaller screens
     text-align: center;
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
+    order: -1; // Brings text above the image on smaller screens
   }
 `;
 
@@ -135,7 +127,43 @@ const Content = styled.div`
 const Title = styled(animated.div)`
   font-size: 2em;
   color: ${(props) => props.theme.titleColor};
+  position: relative;
+  padding: 5px 20px; 
+  margin: 5px 0;
+  overflow: hidden;
+  border-radius: 10px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.2);
+    filter: blur(8px);
+    z-index: -1;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 120%; 
+    height: 100%;
+    top: 0;
+    left: -150%;  // Starts from left, off-screen
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.7), transparent);
+    filter: blur(5px);
+    transition: transform 0.7s ease-out;
+    z-index: 0;
+  }
+
+  &:hover::before {
+    transform: translateX(200%);  // Moves the wave across the text
+  }
 `;
+
+
 
 const Text = styled.p`
   font-size: 18px;
@@ -170,6 +198,18 @@ function App() {
   const toggleTheme = () => {
     setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
   };
+  const TitleComponent = ({ children }) => {
+    const [hover, setHover] = useState(false);
+  
+    const handleMouseEnter = () => setHover(true);
+    const handleMouseLeave = () => setHover(false);
+  
+    return (
+      <Title onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{ transform: hover ? 'translateX(-66.66%)' : 'translateX(0)' }}>
+        {children}
+      </Title>
+    );
+  };
 
   useEffect(() => {
     const handleMouseMove = (event) => {
@@ -197,7 +237,7 @@ function App() {
         <ProfilePic style={profileProps} src="/pics/profile_pic.JPG" alt="Profile Picture" />
         <Content>
           <Title style={titleProps}>Reimagine a whole new world of endless opportunities.</Title>
-          <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+          <Text>Enhancing your digital presence with customized web and software solutions.</Text>
         </Content>
       </MainContainer>
       <ToggleButton onClick={toggleTheme}>Toggle Theme</ToggleButton>
