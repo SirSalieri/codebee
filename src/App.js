@@ -67,17 +67,30 @@ const ToggleButton = styled.button`
   background: ${({ theme }) => theme.body === '#fff' ? '#000' : '#fff'};
   color: ${({ theme }) => theme.body === '#fff' ? '#fff' : '#000'};
   border: 2px solid ${({ theme }) => theme.body === '#fff' ? '#000' : '#fff'};
-  border-radius: 30px;
+  border-radius: 50%; // Adjust to make it circular if you use an icon
   cursor: pointer;
   font-size: 0.8rem;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem;
   margin: 10px;
-  transition: all 0.3s ease;
   position: absolute;
   top: 20px;
   right: 20px;
   z-index: 1000;
+  transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    font-size: 0.6rem; // Smaller font for mobile
+    padding: 0.4rem;
+    top: 15px;
+    right: 15px;
+  }
+
+  @media (max-width: 480px) {
+    top: 10px; // Further adjust for very small screens
+    right: 10px;
+  }
 `;
+
 
 const MainContainer = styled.div`
   flex: 1;
