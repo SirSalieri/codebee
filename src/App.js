@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { useSpring, animated } from 'react-spring';
+import { FaSun, FaMoon } from 'react-icons/fa';
 
 const themes = {
   dark: {
@@ -15,7 +16,6 @@ const themes = {
     buttonHoverBackground: '#fff',
     buttonHoverColor: '#000',
   },
-  
   light: {
     body: '#fff',
     text: '#363537',
@@ -59,35 +59,6 @@ const MenuItem = styled.a`
   font-size: 16px;
   &:hover {
     color: ${(props) => props.theme.menuItemHoverColor};
-  }
-`;
-
-
-const ToggleButton = styled.button`
-  background: ${({ theme }) => theme.body === '#fff' ? '#000' : '#fff'};
-  color: ${({ theme }) => theme.body === '#fff' ? '#fff' : '#000'};
-  border: 2px solid ${({ theme }) => theme.body === '#fff' ? '#000' : '#fff'};
-  border-radius: 50%; // Adjust to make it circular if you use an icon
-  cursor: pointer;
-  font-size: 0.8rem;
-  padding: 0.5rem;
-  margin: 10px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  transition: all 0.3s ease;
-
-  @media (max-width: 768px) {
-    font-size: 0.6rem; // Smaller font for mobile
-    padding: 0.4rem;
-    top: 15px;
-    right: 15px;
-  }
-
-  @media (max-width: 480px) {
-    top: 10px; // Further adjust for very small screens
-    right: 10px;
   }
 `;
 
@@ -203,20 +174,51 @@ const Blob = styled.div`
   z-index: -1;
 `;
 
+const ToggleButton = styled.button`
+  background: ${({ theme }) => theme.body === '#fff' ? '#000' : '#fff'};
+  color: ${({ theme }) => theme.body === '#fff' ? '#fff' : '#000'};
+  border: 2px solid ${({ theme }) => theme.body === '#fff' ? '#000' : '#fff'};
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem; // Larger size for the icon
+  padding: 0.5rem;
+  margin: 10px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem; // Slightly smaller on mobile
+    padding: 0.4rem;
+    top: 15px;
+    right: 15px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    top: 10px;
+    right: 10px;
+  }
+`;
+
 function App() {
   const profileProps = useSpring({ to: { opacity: 1, transform: 'translateY(0)' }, from: { opacity: 0, transform: 'translateY(-50px)' }, delay: 300 });
   const titleProps = useSpring({ to: { opacity: 1, transform: 'translateY(0)' }, from: { opacity: 0, transform: 'translateY(50px)' }, delay: 600 });
   const [theme, setTheme] = useState('dark');
   const [position, setPosition] = useState({ x: '-50%', y: '-50%' });
+
   const toggleTheme = () => {
     setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
   };
+
   const TitleComponent = ({ children }) => {
     const [hover, setHover] = useState(false);
-  
+
     const handleMouseEnter = () => setHover(true);
     const handleMouseLeave = () => setHover(false);
-  
+
     return (
       <Title onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{ transform: hover ? 'translateX(-66.66%)' : 'translateX(0)' }}>
         {children}
@@ -245,7 +247,7 @@ function App() {
         <MenuItem href="#">Services</MenuItem>
         <MenuItem href="#">Contact</MenuItem>
       </Menu>
-      <Blob x={position.x} y={position.y} /> {/* Ensure Blob is using the updated position */}
+      <Blob x={position.x} y={position.y} />
       <MainContainer>
         <ProfilePic style={profileProps} src="/pics/profile_pic.JPG" alt="Profile Picture" />
         <Content>
@@ -253,7 +255,9 @@ function App() {
           <Text>Enhancing your digital presence with customized web and software solutions.</Text>
         </Content>
       </MainContainer>
-      <ToggleButton onClick={toggleTheme}>Toggle Theme</ToggleButton>
+      <ToggleButton onClick={toggleTheme}>
+        {theme === 'dark' ? <FaSun /> : <FaMoon />}
+      </ToggleButton>
       <Menu>
         <MenuItem href="#">Projects</MenuItem>
         <MenuItem href="#">About Mike'S</MenuItem>
