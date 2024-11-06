@@ -256,7 +256,7 @@ function App() {
         </Content>
       </MainContainer>
       <ToggleButton onClick={toggleTheme}>
-      {theme === 'dark' ? <FaSun style={{ fontSize: '1em' }} /> : <FaMoon style={{ fontSize: '1em' }} />}      </ToggleButton>
+        {theme === 'dark' ? <FaSun style={{ fontSize: '1em' }} /> : <FaMoon style={{ fontSize: '1em' }} />}      </ToggleButton>
       <Menu>
         <MenuItem href="#">Projects</MenuItem>
         <MenuItem href="#">About Mike'S</MenuItem>
